@@ -1,0 +1,180 @@
+:root {
+  --color-primary: #4f7cff;
+  --color-primary-dark: #3a63db;
+  --color-primary-light: #7d9dff;
+  --color-primary-soft: #eef3ff;
+  --color-accent: #22c7a9;
+
+  --color-bg: #f4f6fb;
+  --color-bg-deep: #e9edf6;
+  --color-surface: #ffffff;
+  --color-surface-alt: #fafbfe;
+
+  --color-text: #1d2531;
+  --color-text-secondary: #5b6779;
+  --color-text-muted: #93a0b4;
+  --color-border: #e3e8f2;
+  --color-border-strong: #d3dae8;
+
+  --color-success: #16b981;
+  --color-warning: #f2a33c;
+  --color-danger: #f0564f;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(29, 37, 49, 0.06);
+  --shadow-md: 0 6px 20px rgba(29, 37, 49, 0.08);
+  --shadow-lg: 0 16px 40px rgba(29, 37, 49, 0.12);
+
+  --nav-height: 64px;
+  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Element Plus 全局主题变量：对齐品牌色与圆角节奏 */
+  --el-color-primary: #4f7cff;
+  --el-color-primary-light-3: #7d9dff;
+  --el-color-primary-light-5: #a5bbff;
+  --el-color-primary-light-7: #cdd9ff;
+  --el-color-primary-light-8: #e0e8ff;
+  --el-color-primary-light-9: #eef3ff;
+  --el-color-primary-dark-2: #3a63db;
+  --el-border-radius-base: 8px;
+  --el-font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccd5e5;
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.page {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-5) var(--space-6);
+}
+
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.page-sub {
+  margin-top: var(--space-1);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Element Plus 主题微调 */
+.el-button--primary {
+  --el-button-bg-color: var(--color-primary);
+  --el-button-border-color: var(--color-primary);
+  --el-button-hover-bg-color: var(--color-primary-dark);
+  --el-button-hover-border-color: var(--color-primary-dark);
+  --el-button-active-bg-color: var(--color-primary-dark);
+  transition: all var(--transition);
+}
+
+.el-button--primary:not(.is-link):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(79, 124, 255, 0.32);
+}
+
+.el-button {
+  transition: all var(--transition);
+}
+
+.el-card,
+.el-drawer,
+.el-dialog {
+  border-radius: var(--radius-md);
+}
+
+.el-table th.el-table__cell {
+  background: var(--color-surface-alt) !important;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.el-tag {
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding: var(--space-4) var(--space-3) var(--space-5);
+  }
+
+  .page-title {
+    font-size: 19px;
+  }
+}

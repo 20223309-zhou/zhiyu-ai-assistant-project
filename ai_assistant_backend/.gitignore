@@ -1,0 +1,12 @@
+# ============ 环境变量 ============
+# 含 API Key、数据库密码等真实凭据，绝不能入库。
+# 仓库里只提交模板 .env.example，真实值一律填在 .env 里。
+# 当前 .env 已从 git 索引中摘除（git ls-files 里没有它）；换机器重新 clone 后，
+# 可以用 `git ls-files | grep .env` 再确认一次。
+.env
+.env.local
+.env.*.local
+
+# ============ Python 运行时产物 ============
+__pycache__/
+*.py[cod]

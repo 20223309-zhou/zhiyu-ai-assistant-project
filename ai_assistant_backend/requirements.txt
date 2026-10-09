@@ -1,0 +1,225 @@
+# ============================================================
+# FastAPI + PostgreSQL 项目依赖
+# 环境：Python 3.14（Windows x64）
+#
+# 安装：
+#   pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+#
+# 镜像不通时依次替换最后的 -i 地址：
+#   阿里云  https://mirrors.aliyun.com/pypi/simple/
+#   腾讯云  https://mirrors.cloud.tencent.com/pypi/simple
+#
+# 部署时生成含完整间接依赖的锁定文件：
+#   pip freeze > requirements.lock.txt
+# ============================================================
+
+
+# ---------- Web 框架 ----------
+
+fastapi==0.140.0
+
+# [standard] 额外提供 watchfiles（--reload 快速热重载，否则退化为慢速轮询）、
+# httptools（更快的 HTTP 解析）、websockets、python-dotenv 等。
+uvicorn[standard]==0.51.0
+
+
+# ---------- 鉴权 ----------
+
+# JWT 的实现。⚠️ 包名是 PyJWT，不是 jwt ——
+# PyPI 上另有一个叫 jwt 的包，是年代久远的另一个东西，装了 import 也会撞名。
+# 代码里的 import 名仍然是 `import jwt`。
+PyJWT==2.8.0
+
+
+# ---------- 数据校验 ----------
+
+# FastAPI 会连带安装，但代码里直接 import，属于直接依赖，显式列出更清晰。
+pydantic==2.13.4
+
+
+# ---------- 数据库 ----------
+
+# [asyncio] 附带 greenlet —— 异步 SQLAlchemy 的硬性依赖。
+# 写成裸 sqlalchemy 能装上，但换台机器后 create_async_engine 会直接报错。
+sqlalchemy[asyncio]==2.0.51
+
+# PostgreSQL 异步驱动（C 扩展，已确认 cp314 有预编译 wheel，无需编译器）。
+# 连接串格式：postgresql+asyncpg://user:password@host:5432/dbname
+# 注意：不要在 DSN 里加 ?charset=...，asyncpg 不接受该参数。
+asyncpg==0.31.0
+
+# 数据库迁移。改表结构走它生成迁移脚本，而不是手工 ALTER 或 create_all
+# （create_all 不会修改已存在的表）。
+alembic==1.18.4
+
+# 对象存储。知识库文件本体存 MinIO，数据库只存元数据。
+minio==7.2.20
+
+# 解析 multipart/form-data，上传文件接口（UploadFile）必需。
+python-multipart==0.0.32
+
+
+# PostgreSQL 同步驱动（psycopg 3，与上面的 asyncpg 并存，用途不同）：
+#   asyncpg          → 自己写的 async 业务代码，DSN 用 postgresql+asyncpg://
+#   psycopg[binary]  → LangChain 的 PGVector 和 LangGraph 的 checkpoint，
+#                      它们底层是同步 SQLAlchemy，DSN 要写 postgresql+psycopg://
+# [binary] 必须带 —— 裸 psycopg 是纯 Python 实现，运行时需要系统里有 libpq，
+# Windows 上通常没有，报 "no pq wrapper available"。
+psycopg[binary]==3.3.6
+
+
+# ---------- 配置 ----------
+
+# 从 .env 读取数据库连接串等配置，避免密码明文进版本库。
+python-dotenv==1.2.3
+
+
+# ============================================================
+# LangChain / LangGraph（AI 能力层）
+#
+# 版本取自 python-ai 项目的实际安装版本，均为 Python 3.14 上验证可用。
+# ============================================================
+
+# ---------- LangChain 核心 ----------
+
+# TextSplitter 等按需拆出独立包，不再从 langchain 里 import。
+langchain==1.3.14
+langchain-core==1.5.0
+langchain-text-splitters==1.1.2
+
+# 社区集成包（各类 DocumentLoader）。
+# 注意：官方已将其标记为 sunset，import 时会打印 DeprecationWarning。
+# 新项目能不用就不用，改用独立包（如 langchain-unstructured）；PDF/JSON 这类
+# 没有独立包的，只能继续用它。
+langchain-community==0.4.2
+
+
+# ---------- LangGraph（Agent / 状态图）----------
+
+langgraph==1.2.9
+
+# 把 Agent 的对话状态持久化到 PostgreSQL，支持多轮记忆和断点恢复。
+# 依赖 psycopg（v3）+ psycopg-pool，见下方"数据库"一节。
+langgraph-checkpoint-postgres>=3.1.2
+
+
+# ---------- 模型接入 ----------
+
+# 本地模型（Ollama）。embedding 用它，绕开云端 API 的费用和限流。
+langchain-ollama==1.1.0
+
+# OpenAI 协议兼容层。可用于任何 OpenAI 兼容端点（含自建网关）。
+# 注意：接非 OpenAI 官方服务时，embedding 必须传 check_embedding_ctx_length=False，
+# 否则它会发送 token ID 数组，服务端报 "invalid input type"。
+langchain-openai==1.4.0
+langchain-deepseek==1.1.0
+
+# langchain-openai 的底层 SDK，代码里也可能直接 import。
+openai==2.46.0
+
+
+# ---------- 向量库 ----------
+
+# pgvector 接入。连接串必须写成 postgresql+psycopg://（底层走 SQLAlchemy）。
+langchain-postgres==0.0.18
+
+# 纯本地向量库，零外部依赖，适合开发和测试。生产环境用上面的 pgvector。
+langchain-chroma==1.1.0
+
+
+# ---------- 文档解析 ----------
+
+# Unstructured 的官方独立包（langchain-community 里的 UnstructuredLoader 已迁到此）。
+# 格式无关：一个类吃 docx / md / pdf / html / csv。返回按元素类型切分的文档
+# （Title / NarrativeText / ListItem / CodeSnippet / Table）。
+langchain-unstructured==1.0.1
+
+# ⚠️ extra 是分格式的，漏装不会在 import 时报错，要等真去解析那个格式才炸：
+#      [pdf]    → PDF / 图片
+#      [xlsx]   → Excel
+#      [pptx]   → PPT
+#      [audio]  → 音频（还需 whisper，模型要另行下载）
+# ⚠️ 装了[docx]还不够！还需要两个 pip 装不来的东西，见文件末尾"机器级依赖"一节。
+unstructured[docx,md]==0.27.6
+
+pypdf==6.19.0
+docx2txt==0.9
+
+# JSONLoader 的 jq_schema 依赖它。注意：纯中文 JSON 建议手写加载，
+# JSONLoader 内部用 json.dumps() 默认 ensure_ascii=True，会把中文转义成 \uXXXX。
+jq==1.12.0
+
+
+# ---------- 工具集成 ----------
+
+langchain-tavily==0.2.18
+langchain-mcp-adapters==0.3.0
+
+
+# ============================================================
+# 后续按需追加（当前不安装）
+# ============================================================
+# pytest             # 单元测试
+# pytest-asyncio     # 测试 async 端点
+# httpx              # TestClient 的依赖；调用第三方 HTTP 接口也用它
+# python-multipart   # 仅处理表单 Form / 文件上传 UploadFile 时需要
+
+
+# ============================================================
+# 机器级依赖（pip 装不了，新环境必须手动处理）
+#
+# 下面这些不在上面的清单里，但缺了会让运行时崩。而且都是
+# "import 时正常、真正用到才崩"的类型，换机器部署时最容易漏。
+# ============================================================
+
+# 【1】unstructured 需要 spaCy 英文模型 en_core_web_sm
+#
+#   为什么 pip 装不上：该模型不在 PyPI 分发，只在 GitHub Releases。
+#   unstructured 首次解析文档时会自动去下载，国内访问 GitHub 基本失败：
+#       RuntimeError: Failed to download spaCy model from https://github.com/...
+#
+#   解法（手动下载 wheel 后本地安装，绕过自动下载逻辑）：
+#       # 直连不通就用 GitHub 加速镜像，下面几个哪个通用哪个
+#       curl -L -o en_core_web_sm.whl https://gh-proxy.com/https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+#       pip install en_core_web_sm.whl
+#
+#   校验：sha256 应为 1932429db727d4bff3deed6b34cfc05df17794f4a52eeb26cf8928f7c1a0fb85
+#         （自动下载路径自带校验，手动安装不会验，所以自己核一下）
+
+# 【2】Windows 上 libmagic 会让 Python 进程直接崩 —— 不是抛异常，是段错误
+#
+#   现象：用到 unstructured 时进程无声退出，exit code 139，没有 traceback。
+#   原因：magic/loader.py 有个候选路径列表，在 Windows 上会匹配到
+#         Git for Windows 自带的 <Git>\usr\bin\msys-magic-1.dll。
+#         那是 Cygwin 构建而非原生 Windows DLL，ctypes 加载时访问越权；
+#         而 python-magic 只捕获 OSError / ImportError，接不住段错误。
+#
+#   解法：放一个原生 libmagic.dll，让候选列表更早命中它。
+#     1. pip download python-magic-bin --no-deps -d <临时目录>
+#     2. 从 wheel 里取出 magic/libmagic/libmagic.dll 和 magic.mgc
+#     3. 两个文件都放进 venv 的 Scripts/ 目录（与 python.exe 同级）
+#        —— 候选表里的 find_library('libmagic') 靠 PATH 命中，venv 激活时
+#           Scripts 在 PATH 上，会先于第 11 位的 msys 库返回
+#     4. 若某种启动方式 PATH 里没有 Scripts（例如直接调 .venv\Scripts\python.exe），
+#        还需在 site-packages 放一个 .pth 文件把 Scripts 追加进 PATH
+
+# 【3】Ollama 及本地模型
+#
+#   模型不走 pip 也不走 requirements，安装 Ollama 后要单独拉：
+#       ollama pull qwen3-embedding:0.6b    # 嵌入，1024 维
+#       ollama pull bge-m3                  # 嵌入备选，同为 1024 维
+#
+#   ⚠️ NVIDIA 驱动过旧时会报 CUDA error: device kernel image is invalid，
+#      此时所有模型（包括对话模型）都无法加载。临时绕过：
+#          setx OLLAMA_LLM_LIBRARY cpu      （设完必须重启 Ollama 才生效）
+#      代价是对话模型推理变很慢（CPU 跑 4B 模型每句要几分钟），
+#      但 embedding 够快，RAG 链路不受影响。根治要靠升级显卡驱动。
+
+# 【4】PDF 的额外情况（当前未启用）
+#
+#   langchain-unstructured 在 Windows + Python 3.14 下有个上游 bug：
+#   [pdf] extra 的依赖标记排除了该组合，但 pdf.py 仍无条件 import，
+#   导致 partition_pdf 直接报 No module named 'unstructured_inference'。
+#   要修得手动装 unstructured-inference（约 400MB，含 torch）；
+#   且扫描版 PDF 还需额外安装 Tesseract 可执行程序和中文语言包 chi_sim。
+#   纯文字版 PDF 用 pypdf / PyPDFLoader 就行，不必走这条路。

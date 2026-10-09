@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 336" width="840" height="336" role="img" aria-label="从知识库得到回答的抽象示意">
+  <defs>
+    <linearGradient id="welcomeBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="1" stop-color="#f1f5ff" />
+    </linearGradient>
+    <radialGradient id="welcomeGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4f7cff" stop-opacity="0.16" />
+      <stop offset="1" stop-color="#4f7cff" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="welcomeBubble" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="1" stop-color="#f7faff" />
+    </linearGradient>
+  </defs>
+
+  <!-- 故意不加背景矩形：透明底才能"浮"在页面上，
+       加一块浅色底 + 投影会立刻变成"贴了一张图"的 stock 图观感 -->
+  <circle cx="140" cy="168" r="180" fill="url(#welcomeGlow)" />
+  <circle cx="700" cy="150" r="160" fill="url(#welcomeGlow)" />
+
+  <g fill="#4f7cff" fill-opacity="0.16">
+    <circle cx="70" cy="60" r="3" />
+    <circle cx="380" cy="46" r="3" />
+    <circle cx="620" cy="70" r="3" />
+    <circle cx="796" cy="270" r="3" />
+    <circle cx="330" cy="300" r="3" />
+    <circle cx="96" cy="286" r="3" />
+  </g>
+
+  <g stroke="#4f7cff" stroke-opacity="0.35" stroke-width="1.6" fill="none">
+    <path d="M110 150 L170 110 L250 160 L200 200 L110 150" />
+    <path d="M200 200 L150 230" stroke-opacity="0.25" />
+    <path d="M250 160 L280 110" stroke-opacity="0.25" />
+    <path d="M170 110 L280 110" stroke-opacity="0.2" />
+  </g>
+  <g fill="#4f7cff">
+    <circle cx="110" cy="150" r="9" fill-opacity="0.9" />
+    <circle cx="170" cy="110" r="6" fill-opacity="0.6" />
+    <circle cx="250" cy="160" r="11" fill-opacity="0.85" />
+    <circle cx="200" cy="200" r="7" fill-opacity="0.65" />
+    <circle cx="280" cy="110" r="5" fill-opacity="0.45" />
+    <circle cx="150" cy="230" r="6" fill-opacity="0.5" />
+  </g>
+  <circle cx="250" cy="160" r="26" fill="none" stroke="#22c7a9" stroke-opacity="0.5" stroke-width="1.5" />
+
+  <path d="M336 168 H430" stroke="#4f7cff" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="7 7" fill="none" />
+  <path d="M424 160 L436 168 L424 176" stroke="#4f7cff" stroke-opacity="0.6" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+
+  <path d="M470 108 H742 A18 18 0 0 1 760 126 V212 A18 18 0 0 1 742 230 H540 L512 256 L516 230 H470 A18 18 0 0 1 452 212 V126 A18 18 0 0 1 470 108 Z"
+        fill="url(#welcomeBubble)" stroke="#dfe7f8" stroke-width="1.5" />
+
+  <g fill="#4f7cff">
+    <rect x="486" y="136" width="196" height="11" rx="5.5" fill-opacity="0.75" />
+    <rect x="486" y="164" width="230" height="11" rx="5.5" fill-opacity="0.5" />
+    <rect x="486" y="192" width="142" height="11" rx="5.5" fill-opacity="0.32" />
+  </g>
+  <circle cx="726" cy="136" r="6" fill="#22c7a9" fill-opacity="0.85" />
+</svg>

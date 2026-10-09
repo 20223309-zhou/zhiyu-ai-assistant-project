@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1160" width="900" height="1160" role="img" aria-label="知识网络抽象背景">
+  <defs>
+    <linearGradient id="heroBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b2a55" />
+      <stop offset="0.55" stop-color="#2f56c4" />
+      <stop offset="1" stop-color="#1f8f86" />
+    </linearGradient>
+    <radialGradient id="heroGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.26" />
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="heroGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="900" height="1160" fill="url(#heroBg)" />
+  <circle cx="170" cy="200" r="330" fill="url(#heroGlow)" />
+  <circle cx="780" cy="900" r="380" fill="url(#heroGlow)" />
+  <rect width="900" height="1160" fill="url(#heroGrid)" />
+
+  <g stroke="#ffffff" stroke-width="1.6" fill="none">
+    <path d="M160 180 L330 120 L470 260 L640 170 L780 300" stroke-opacity="0.30" />
+    <path d="M160 180 L220 430 L400 520 L470 260" stroke-opacity="0.22" />
+    <path d="M400 520 L600 470 L640 170" stroke-opacity="0.20" />
+    <path d="M600 470 L760 600 L780 300" stroke-opacity="0.22" />
+    <path d="M220 430 L150 700 L320 800 L400 520" stroke-opacity="0.20" />
+    <path d="M320 800 L520 730 L600 470" stroke-opacity="0.18" />
+    <path d="M520 730 L680 860 L760 600" stroke-opacity="0.20" />
+    <path d="M150 700 L240 1000 L430 1080" stroke-opacity="0.18" />
+    <path d="M320 800 L430 1080 L620 1020 L680 860" stroke-opacity="0.16" />
+    <path d="M620 1020 L820 980 L760 600" stroke-opacity="0.16" />
+  </g>
+
+  <g fill="#ffffff">
+    <circle cx="160" cy="180" r="10" fill-opacity="0.75" />
+    <circle cx="330" cy="120" r="6" fill-opacity="0.55" />
+    <circle cx="470" cy="260" r="14" fill-opacity="0.85" />
+    <circle cx="640" cy="170" r="7" fill-opacity="0.6" />
+    <circle cx="780" cy="300" r="9" fill-opacity="0.68" />
+    <circle cx="220" cy="430" r="7" fill-opacity="0.5" />
+    <circle cx="400" cy="520" r="11" fill-opacity="0.72" />
+    <circle cx="600" cy="470" r="6" fill-opacity="0.45" />
+    <circle cx="760" cy="600" r="12" fill-opacity="0.6" />
+    <circle cx="150" cy="700" r="8" fill-opacity="0.45" />
+    <circle cx="320" cy="800" r="13" fill-opacity="0.62" />
+    <circle cx="520" cy="730" r="6" fill-opacity="0.4" />
+    <circle cx="680" cy="860" r="9" fill-opacity="0.5" />
+    <circle cx="240" cy="1000" r="10" fill-opacity="0.45" />
+    <circle cx="430" cy="1080" r="6" fill-opacity="0.38" />
+    <circle cx="620" cy="1020" r="8" fill-opacity="0.42" />
+    <circle cx="820" cy="980" r="7" fill-opacity="0.35" />
+  </g>
+
+  <g stroke="#22c7a9" stroke-opacity="0.5" stroke-width="1.5" fill="none">
+    <circle cx="470" cy="260" r="34" />
+    <circle cx="320" cy="800" r="40" stroke-opacity="0.35" />
+  </g>
+</svg>
